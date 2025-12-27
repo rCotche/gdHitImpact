@@ -188,3 +188,4 @@ cull_mask = 1048571
 libraries = {
 &"": SubResource("AnimationLibrary_50rwd")
 }
+autoplay = "hit"
