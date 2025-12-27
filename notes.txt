@@ -1,0 +1,47 @@
+https://www.youtube.com/watch?v=GeParYI2J6I
+
+GODOT 4.5.1
+
++++++++++++
+IMPACT
++++++++++++
+
+add node GPUParticle3d > inpector > process material > new particle process material
+
+add node GPUParticle3d > inpector > draw passes > pass 1 > new quad mesh
+
+add node GPUParticle3d > inpector > process material > process material > click on > accélérations > gravity > y==0
+
+add node GPUParticle3d > inpector > amount == 1
+
+add node GPUParticle3d > inpector > geometry > material override > shader material > click on > shader > new shader, (visual shader) simple shader > click on
+flags > unshaded > enabled
+
+********
+Particle look at the camera
+
+en bas au niveau du terminal, onglet shder editor > select vertex ref image visual_shader_fragment.png
+
+add node getBillbordMatrix
+getBillbordMatrix node (model_view_matrix) link to output node (model view matrix)
+billbord type > particles
+keep scale > enabled
+
+********
+display
+
+en bas au niveau du terminal, onglet shder editor > select fragment ref image visual_shader_fragment.png
+
+add node color (fragment)
+
+color node (1er point) link to output node (albedo)
+
+add node texture2dparameter > type > color > rename it to "hit_texture"
+
+from the point "sampler2d" du node texture2dparameter, drag mouse dans le vide/espace, add node texture2d > liste déroulante data to color, ref image texture2d.png
+
+add node multiply (float operators)
+
+texture2d node (red) link to multiply node (a)
+color node (alpha) link to multiply node (b), ref image color_fragment.png (maj 3:51)
+multiply node (op) link to output node (alpha)

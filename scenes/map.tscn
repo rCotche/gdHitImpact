@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://da56xg88fyjne"]
+
+[ext_resource type="Shader" uid="uid://2ccvabieoxao" path="res://shaders/simple_shader.res" id="1_4xfga"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hrmi8"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_4xfga"]
+sky_material = SubResource("ProceduralSkyMaterial_hrmi8")
+
+[sub_resource type="Environment" id="Environment_paxxb"]
+background_mode = 2
+sky = SubResource("Sky_4xfga")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gldc4"]
+albedo_color = Color(0.11304883, 0.11304883, 0.11304883, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_paxxb"]
+render_priority = 0
+shader = ExtResource("1_4xfga")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hrmi8"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_4xfga"]
+
+[node name="Map" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_paxxb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="geometry" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="geometry"]
+size = Vector3(10, 0.1, 10)
+material = SubResource("StandardMaterial3D_gldc4")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5696368, 0)
+size = Vector3(1, 1, 0.1)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("ShaderMaterial_paxxb")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_hrmi8")
+draw_pass_1 = SubResource("QuadMesh_4xfga")
