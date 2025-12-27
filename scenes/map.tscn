@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://da56xg88fyjne"]
+[gd_scene load_steps=16 format=3 uid="uid://da56xg88fyjne"]
 
 [ext_resource type="Shader" uid="uid://2ccvabieoxao" path="res://shaders/simple_shader.res" id="1_4xfga"]
+[ext_resource type="Texture2D" uid="uid://crf40urpuh2wh" path="res://textures/T_flare81.png" id="2_paxxb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hrmi8"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -20,9 +21,36 @@ albedo_color = Color(0.11304883, 0.11304883, 0.11304883, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_paxxb"]
 render_priority = 0
 shader = ExtResource("1_4xfga")
+shader_parameter/HitTexture = ExtResource("2_paxxb")
+
+[sub_resource type="Curve" id="Curve_gldc4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5313352, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0cso3"]
+curve = SubResource("Curve_gldc4")
+
+[sub_resource type="Gradient" id="Gradient_paxxb"]
+colors = PackedColorArray(2.454227, 2.231445, 0, 1, 1, 0.735357, 0.48452926, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gldc4"]
+gradient = SubResource("Gradient_paxxb")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_paxxb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gldc4"]
+curve = SubResource("Curve_paxxb")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hrmi8"]
+angle_min = -179.99998
+angle_max = 180.00002
 gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_gldc4")
+color_ramp = SubResource("GradientTexture1D_gldc4")
+alpha_curve = SubResource("CurveTexture_0cso3")
 
 [sub_resource type="QuadMesh" id="QuadMesh_4xfga"]
 
@@ -52,5 +80,7 @@ size = Vector3(1, 1, 0.1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("ShaderMaterial_paxxb")
 amount = 1
+lifetime = 0.25
+explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_hrmi8")
 draw_pass_1 = SubResource("QuadMesh_4xfga")

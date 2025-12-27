@@ -45,3 +45,20 @@ add node multiply (float operators)
 texture2d node (red) link to multiply node (a)
 color node (alpha) link to multiply node (b), ref image color_fragment.png (maj 3:51)
 multiply node (op) link to output node (alpha)
+
+select GPUParticle3d node > inpector > geometry > material override > shader material > click on > shader parameter
+
+select GPUParticle3d node > inpector > process material > process material > click on > spawn > angle > min=-180;max=180
+
+select GPUParticle3d node > inpector > process material > process material > click on > display > scale > min=0.8;max=1.5
+
+select GPUParticle3d node > inpector > process material > process material > click on > display > scale > scale curve > curveTexture, ref image curve_texture.png
+
+select GPUParticle3d node > inpector > process material > process material > click on > display > color curve > color ramp > new gradienTexture 1d > click on > use HDR > enbaled
+gradient > click on > start du fradient raw 8;0.8;0 | end du gradient raw 1;0.5;0.2
+
+select GPUParticle3d node > inpector > process material > process material > click on > display > color curve > alpha curve > curveTexture, ref image alpha_curve.png
+
+select GPUParticle3d node > inpector > Time > 0.25
+
+select GPUParticle3d node > inpector > Time > explosiveness = 1
