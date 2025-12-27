@@ -103,3 +103,57 @@ select GPUParticle3d node > inpector > process material > process material > cli
 select GPUParticle3d node > inpector > process material > process material > click on > display > scale > min=0.3;max=0.5
 
 select GPUParticle3d node > inpector > process material > process material > click on > display > color curve > alpha curve > curveTexture, ref image alpha_curve.png
+
++++++++++++
+Mark
++++++++++++
+
+add node decal (bien pour bullet/explosion/blood marks) > inpector > texture > albedo > drag n drop texture "groundmark"
+
+********
+groundmark & hit effect ne se superpose pas
+
+select GPUParticle3d (hit effect) > inpector > layer 3
+
+select GPUParticle3d (decal) > inpector > cull mask > disable 3
+
+********
+pour que le groundmark ne disparait pas lorsque le hit effect est loin
+
+select GPUParticle3d (decal) > inpector > vertical fade > upper=0.0123;lower=0.0
+
+********
+increase quality ? de la mark
+
+select simple_shader.tres > click on > en bas au niveau du terminal, onglet shder editor > select fragment ref image visual_shader_fragment.png
+
+add node proximityfade
+
+add node multiply (float operators)
+
+proximityfade node (fade) link to multiply node (a)
+multiply node (op) [from impact part] link to multiply node (b)
+multiply node (op) link to output node (alpha), ref image decal_shader_fix.png
+
+ASTUCE
+click droit sur le node "hit vfx" > save the branch as a new scènes
+
+select GPUParticle3d (hit effect) > inpector > Time > one shot
+
+select GPUParticle3d (sparks) > inpector > Time > one shot
+
+select GPUParticle3d (sparks) > inpector > amount = 25
+
+****
+animation player
+
+add node animation player > en bas au niveau du terminal, onglet animation > click on btn animation, ref image btn_animation.png > new animation
+
+Animation tab(doit etre ouvert/activ) select hit effect > inspector > emitting > enabled > click key
+Animation tab(doit etre ouvert/activ) select sparks > inspector > emitting > enabled > click key
+
+Animation tab(doit etre ouvert/activ) select decal > inspector > parameters > albedo mix > 0 > click key (time 0.0)
+Animation tab(doit etre ouvert/activ) select decal > inspector > parameters > albedo mix > 1 > click key (time 0.1)
+Animation tab(doit etre ouvert/activ) select decal > inspector > parameters > albedo mix > 1 > click key (time 0.4)
+Animation tab(doit etre ouvert/activ) select decal > inspector > parameters > albedo mix > 0 > click key (time 0.7)
+autoplay, ref_image autoplay_animation.png
